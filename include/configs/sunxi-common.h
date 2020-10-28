@@ -432,25 +432,25 @@ extern int soft_i2c_gpio_scl;
 #ifdef CONFIG_USB_KEYBOARD
 #define CONSOLE_STDIN_SETTINGS \
 	"preboot=usb start\0" \
-	"stdin=serial,usbkbd\0"
+	"stdin=\0"
 #else
 #define CONSOLE_STDIN_SETTINGS \
-	"stdin=serial\0"
+	"stdin=\0"
 #endif
 
 #ifdef CONFIG_VIDEO
 #define CONSOLE_STDOUT_SETTINGS \
-	"stdout=serial,vga\0" \
-	"stderr=serial,vga\0"
+	"stdout=\0" \
+	"stderr=\0"
 #elif CONFIG_DM_VIDEO
 #define CONFIG_SYS_WHITE_ON_BLACK
 #define CONSOLE_STDOUT_SETTINGS \
-	"stdout=serial,vidconsole\0" \
-	"stderr=serial,vidconsole\0"
+	"stdout=\0" \
+	"stderr=\0"
 #else
 #define CONSOLE_STDOUT_SETTINGS \
-	"stdout=serial\0" \
-	"stderr=serial\0"
+	"stdout=\0" \
+	"stderr=\0"
 #endif
 
 #ifdef CONFIG_MTDIDS_DEFAULT
@@ -490,13 +490,20 @@ extern int soft_i2c_gpio_scl;
 #else
 #define FDTFILE CONFIG_DEFAULT_DEVICE_TREE ".dtb"
 #endif
-
+/* 
+ * 2020-10-28
+ * changed console to supress logs
+ *  Default console entry:
+ * "console=ttyS0,115200\0" \
+ *
+ * */
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	CONSOLE_ENV_SETTINGS \
 	MEM_LAYOUT_ENV_SETTINGS \
 	DFU_ALT_INFO_RAM \
 	"fdtfile=" FDTFILE "\0" \
-	"console=ttyS0,115200\0" \
+	"console=/dev/null\0" \
+	"silent=1\0" \
 	SUNXI_MTDIDS_DEFAULT \
 	SUNXI_MTDPARTS_DEFAULT \
 	"uuid_gpt_esp=" UUID_GPT_ESP "\0" \
